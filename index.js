@@ -17,7 +17,7 @@ connectDB();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://your-site.netlify.app"
+    "https://prithviyadavhorticulture.netlify.app"
   ],
   credentials: true
 }));
