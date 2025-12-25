@@ -1,4 +1,3 @@
-//LfmTlOnFprRdwSPC
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -9,11 +8,12 @@ const PlantsRouter = require('./Routes/PlantsRouter');
 const CartRouter = require('./Routes/CartRouter');
 const PlaceOrderRouter = require('./Routes/PlaceOrderRouter');
 require('dotenv').config();
-require('./Models/db');
+const connectDB = require("./Models/db");
 
+const PORT = process.env.PORT || 5000;
 
-const PORT = process.env.PORT || 5000
-// app.use(cors());
+connectDB();
+
 app.use(cors({
   origin: [
     "http://localhost:5173",
@@ -21,18 +21,21 @@ app.use(cors({
   ],
   credentials: true
 }));
-app.use(express.json())
-app.use('/auth',AuthRouter);
-app.use('/admin',AdminRouter)
-app.use('/plants',PlantsRouter);
-app.use('/cart',CartRouter);
-app.use('/',PlaceOrderRouter);
 
-app.get("/",(req,res)=>{
-    res.status(200).json({success: true,
-        plants: []});
-})
+app.use(express.json());
+app.use('/auth', AuthRouter);
+app.use('/admin', AdminRouter);
+app.use('/plants', PlantsRouter);
+app.use('/cart', CartRouter);
+app.use('/', PlaceOrderRouter);
 
-app.listen(PORT,()=>{
-    console.log("on port 5000");
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    plants: []
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`on port ${PORT}`);
 });
